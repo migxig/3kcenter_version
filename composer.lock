@@ -1,0 +1,54 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "415ef5d0d4aeb8381683547833bab37f",
+    "packages": [
+        {
+            "name": "salamander/simple-db",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/salamander-mh/simple-db.git",
+                "reference": "4f6c28a68edd5eb1aafedd7d0a502d4774a57724"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/salamander-mh/simple-db/zipball/4f6c28a68edd5eb1aafedd7d0a502d4774a57724",
+                "reference": "4f6c28a68edd5eb1aafedd7d0a502d4774a57724",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SimpleDB\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "salamander-mh",
+                    "email": "1906747819@qq.com"
+                }
+            ],
+            "description": "a simple library to curd db",
+            "time": "2018-08-29T08:33:45+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

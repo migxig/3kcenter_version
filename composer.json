@@ -1,0 +1,5 @@
+{
+    "require": {
+        "salamander/simple-db": "^1.0"
+    }
+}
