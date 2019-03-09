@@ -5,14 +5,7 @@
  * Date: 2019-03-08
  * Time: 17:20
  */
-
-//自动加载
-spl_autoload_register(function ($class) {
-    $file = str_replace("\\", "/", $class) . '.php';
-    if (file_exists($file)) {
-        include $file;
-    }
-});
+require ('index.php');
 
 $ct = !empty($_REQUEST['ct']) ? trim($_REQUEST['ct']) : '';
 $ac = !empty($_REQUEST['ac']) ? trim($_REQUEST['ac']) : '';

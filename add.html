@@ -1,14 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019-03-08
- * Time: 10:47
- */
-
-
-?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-
     <style>
         .el-input{
             width: 200px;
@@ -31,13 +19,16 @@
 <body>
 <div id="app">
     <el-card class="box-card">
-        <el-form ref="form" :model="form" label-width="100px">
-            <el-form-item label="版本号" >
+        <el-form ref="refName" :model="form" :rules="rules" label-width="100px">
+            <el-form-item label="版本号" style="display: inline-block" prop="version">
                 <el-input v-model="form.version"></el-input>
+            </el-form-item>
+            <el-form-item label="用户名" style="display: inline-block" prop="user">
+                <el-input v-model="form.user"></el-input>
             </el-form-item>
         </el-form>
 
-        <el-form v-for="(groups,key) in form.groups" :key="key" ref="form" :model="groups" label-width="100px"
+        <el-form v-for="(groups,key) in form.groups" :rules="rulesGroup" :key="key" ref="refGroup" :model="groups" label-width="100px"
                  style="border: 1px dashed #ccc;padding-top: 20px;width: 60%;position: relative;margin-top: 20px;">
             <i v-if="key == 0" class="el-icon-circle-plus-outline" style="font-size: 30px;position: absolute;right: 8%;top: 45%;cursor: pointer;" @click="addParams"></i>
             <i v-else class="el-icon-remove-outline" style="font-size: 30px;position: absolute;right: 8%;top: 45%;cursor: pointer;" @click="subParams(key)"></i>
@@ -67,7 +58,7 @@
 
         <el-form style="padding-top: 20px">
             <el-form-item>
-                <el-button type="primary" @click="">提交</el-button>
+                <el-button type="primary" @click="submit">提交</el-button>
                 <el-button>取消</el-button>
             </el-form-item>
         </el-form>
@@ -79,13 +70,78 @@
         data: {
             form: {
                 version: '',
+                user:'',
                 groups: [
                     {sys: '', model: '', func: '', content: '', sql: '', modelArr: [], funcArr: [],},
                 ],
             },
             sysArr: [],
+
+            rules:{
+                version: [
+                    {required: true, message: '版本号不能为空'},
+                ],
+                user: [
+                    {required: true, message: '用户名不能为空'},
+                ],
+            },
+
+            rulesGroup:{
+                sys: [
+                    {required: true, message: '系统不能为空'},
+                ],
+                model: [
+                    {required: true, message: '模块不能为空'},
+                ],
+                func: [
+                    {required: true, message: '功能不能为空'},
+                ],
+                content: [
+                    {required: true, message: '更新内容不能为空'},
+                ],
+            },
         },
         methods: {
+            submit: function () {
+                vm.$refs['refName'].validate(function (valid) {
+                    pass = true;
+                    var refGroup = vm.$refs['refGroup'];
+                    for (var i=0;i<refGroup.length;i++) {
+                        vm.$refs['refGroup'][i].validate(function (valid2) {
+                            if(!valid2) {
+                                pass = false;
+                            }
+                        })
+                    }
+
+                    if (valid && pass) {
+                        $.ajax({
+                            type: 'POST',
+                            url:"http://www.3kcenter_version.com/ajaxRoute.php",
+                            data:{
+                                ct: 'VersionLogic',
+                                ac: 'addVersion',
+                                params: vm.form,
+                            },
+                            success: function(result){
+                                data = JSON.parse(result);
+                                if(data.code === 0) {
+                                    vm.$message({
+                                        message: data.msg,
+                                        type: 'success',
+                                    });
+                                } else {
+                                    vm.$message({
+                                        message: data.msg,
+                                        type: 'warning',
+                                    });
+                                }
+                            }
+                        });
+                    }
+                })
+            },
+
             getModelMenu: function (key) {
                 vm.form.groups[key].model = '';
                 vm.form.groups[key].modelArr = [];
@@ -93,6 +149,7 @@
                 vm.form.groups[key].funcArr = [];
 
                 $.ajax({
+                    type: 'POST',
                     url:"http://www.3kcenter_version.com/ajaxRoute.php",
                     data:{
                         ct: 'Menu',
@@ -109,6 +166,7 @@
                 vm.form.groups[key].funcArr = [];
 
                 $.ajax({
+                    type: 'POST',
                     url:"http://www.3kcenter_version.com/ajaxRoute.php",
                     data:{
                         ct: 'Menu',
@@ -131,6 +189,7 @@
 
         created: function () {
             $.ajax({
+                type: 'POST',
                 url:"http://www.3kcenter_version.com/ajaxRoute.php",
                 data:{
                     ct: 'Menu',

@@ -16,7 +16,13 @@ class Menu
 
     public static $menuArr = [];
     public static $sysArr = [];
+    public static $modelArr = [];
     public static $funcArr = [];
+
+    public function __construct()
+    {
+        $this->getMenuList();
+    }
 
     /**
      * 获取签名
@@ -38,7 +44,7 @@ class Menu
      */
     public function getMenuList()
     {
-        if (!empty(self::$menuArr)) {
+        if (self::$menuArr) {
             return self::$menuArr;
         }
 
@@ -52,9 +58,65 @@ class Menu
 
         $func = new Func();
         $menuList = $func->http_post($this->center_url, $params);
-        self::$menuArr = $menuList;
+        $menuList = [
+            'sys'=>[
+                'id'=>'sys',
+                'name'=>'基础管理系统',
+                'children'=>[
+                    [
+                        'id'=>'Base',
+                        'name'=>'基础管理',
+                        'children'=>[
+                            [
+                                'id'=>'sys_Base-listDepartment',
+                                'name'=>'部门管理',
+                                'hidden'=>0,
+                                'ct'=>'sys_Base',
+                            ],
+                            [
+                                'id'=>'sys_Base-listDeptGroup',
+                                'name'=>'小组管理',
+                                'hidden'=>0,
+                                'ct'=>'sys_Base',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id'=>'Project',
+                        'name'=>'项目管理',
+                        'children'=>[
+                            [
+                                'id'=>'sys_Base-listProject',
+                                'name'=>'项目列表',
+                                'hidden'=>0,
+                                'ct'=>'sys_Project'
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
-        return $menuList;
+        $sysList = [];
+        $modelList = [];
+        $funcList = [];
+        foreach ($menuList as $sys=>$sysItem) {
+            $sysList[$sysItem['id']] = ['id' => $sysItem['id'], 'name' => $sysItem['name']];
+            if (!empty($sysItem['children'])) {
+                foreach ($sysItem['children'] as $modelItem) {
+                    $modelList[$sys.'_'.$modelItem['id']] = ['id' => $sys.'_'.$modelItem['id'], 'name' => $modelItem['name']];
+                    if (!empty($modelItem['children'])) {
+                        foreach ($modelItem['children'] as $funcItem) {
+                            $funcList[$funcItem['id']] = ['id' => $funcItem['id'], 'name' => $funcItem['name']];
+                        }
+                    }
+                }
+            }
+        }
+        self::$sysArr = $sysList;
+        self::$modelArr = $modelList;
+        self::$funcArr = $funcList;
+        self::$menuArr = $menuList;
     }
 
     /**
@@ -63,17 +125,12 @@ class Menu
      */
     public function getSysMenu()
     {
-        $sysArr = [];
-        if (self::$menuArr) {
-            $menuList = self::$menuArr;
+        if (self::$sysArr) {
+            return self::$sysArr;
         } else {
-            $menuList = $this->getMenuList();
+            $this->getMenuList();
+            return self::$sysArr;
         }
-        foreach ($menuList as $sys=>$sysItem) {
-            $sysArr[$sysItem['id']] = ['id' => $sysItem['id'], 'name' => $sysItem['name']];
-        }
-
-        return $sysArr;
     }
 
     /**
@@ -83,10 +140,6 @@ class Menu
      */
     public function getModelMenu($params)
     {
-        if(!empty(self::$modelArr)) {
-            return self::$modelArr;
-        }
-
         if (isset($params['sys'])) {
             $sys = trim($params['sys']);
         } else {
@@ -97,16 +150,16 @@ class Menu
         if (self::$menuArr) {
             $menuList = self::$menuArr;
         } else {
-            $menuList = $this->getMenuList();
+            $this->getMenuList();
+            $menuList = self::$menuArr;
         }
         foreach ($menuList as $skey=>$sysItem) {
             if ($skey != $sys) {
                 continue;
             }
-
             if (!empty($sysItem['children'])) {
                 foreach ($sysItem['children'] as $modelItem) {
-                    $modelArr[$sys.'_'.$modelItem['id']] = ['id' => $sys.'_'.$modelItem['id'], 'name' => $modelItem['name'], 'children' => $modelItem['children']];
+                    $modelArr[] = ['id' => $sys.'_'.$modelItem['id'], 'name' => $modelItem['name']];
                 }
             }
         }
@@ -121,35 +174,34 @@ class Menu
      */
     public function getFuncMenu($params)
     {
-        if(!empty(self::$funcArr)) {
-            return self::$funcArr;
-        }
-
-        $modelArr = $this->getModelMenu($params);
         if (isset($params['model'])) {
             $model = trim($params['model']);
         } else {
             return [];
         }
 
-        if (empty($modelArr)) {
-            return [];
+        if (self::$menuArr) {
+            $menuList = self::$menuArr;
+        } else {
+            $this->getMenuList();
+            $menuList = self::$menuArr;
         }
 
         $funcArr = [];
-        if (!empty($modelArr)) {
-            foreach ($modelArr as $funcItem) {
-                if (!empty($funcItem['children'])) {
-                    foreach ($funcItem['children'] as $func) {
-                        if($func['ct'] == $model && $func['hidden'] == 0) {
-                            $funcArr[$func['id']] = ['id' => $func['id'], 'name' => $func['name']];
+        foreach ($menuList as $sys=>$sysItem) {
+            if (!empty($sysItem['children'])) {
+                foreach ($sysItem['children'] as $modelItem) {
+                    if (!empty($modelItem['children'])) {
+                        foreach ($modelItem['children'] as $funcItem) {
+                            if ($funcItem['ct'] == $model && $funcItem['hidden'] == 0) {
+                                $funcArr[] = ['id' => $funcItem['id'], 'name' => $funcItem['name']];
+                            }
                         }
                     }
                 }
             }
         }
 
-        self::$funcArr = $funcArr;
         return $funcArr;
     }
 }
