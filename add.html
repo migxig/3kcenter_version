@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>添加版本内容</title>
+    <title>版本内容_新增</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -14,10 +14,20 @@
         .el-input{
             width: 200px;
         }
+        .box{
+            padding: 10px 0 10px 10px;
+        }
     </style>
 </head>
 <body>
 <div id="app">
+    <div class="box">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item>列表页</el-breadcrumb-item>
+            <el-breadcrumb-item>新增</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+
     <el-card class="box-card">
         <el-form ref="refName" :model="form" :rules="rules" label-width="100px">
             <el-form-item label="版本号" style="display: inline-block" prop="version">
@@ -30,8 +40,8 @@
 
         <el-form v-for="(groups,key) in form.groups" :rules="rulesGroup" :key="key" ref="refGroup" :model="groups" label-width="100px"
                  style="border: 1px dashed #ccc;padding-top: 20px;width: 60%;position: relative;margin-top: 20px;">
-            <i v-if="key == 0" class="el-icon-circle-plus-outline" style="font-size: 30px;position: absolute;right: 8%;top: 45%;cursor: pointer;" @click="addParams"></i>
-            <i v-else class="el-icon-remove-outline" style="font-size: 30px;position: absolute;right: 8%;top: 45%;cursor: pointer;" @click="subParams(key)"></i>
+            <i v-if="key == 0" class="el-icon-circle-plus-outline" style="font-size: 20px;position: absolute;right: 8%;top: 45%;cursor: pointer;" @click="addParams"></i>
+            <i v-else class="el-icon-remove-outline" style="font-size: 20px;position: absolute;right: 8%;top: 45%;cursor: pointer;" @click="subParams(key)"></i>
 
             <el-form-item label="系统" style="display: inline-block" prop="sys">
                 <el-select v-model="groups.sys" filterable clearable placeholder="请选择系统" @change="getModelMenu(key)">
@@ -48,18 +58,18 @@
                     <el-option v-for="item in groups.funcArr" :label="item.name" :value="item.id" :key="item.id"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="更新内容" style="width: 82%" prop="content">
-                <el-input type="textarea" v-model="groups.content" rows="5"></el-input>
+            <el-form-item label="更新内容" style="width: 81.3%" prop="content">
+                <el-input type="textarea" v-model="groups.content" rows="4" placeholder="单句结束统一用中文分号，结尾不需要结束符号"></el-input>
             </el-form-item>
-            <el-form-item label="数据表" style="width: 82%" prop="sql">
-                <el-input type="textarea" v-model="groups.sql" rows="5"></el-input>
+            <el-form-item label="数据表" style="width: 81.3%" prop="sql">
+                <el-input type="textarea" v-model="groups.sql" rows="3" placeholder="空代表没有变动，单句结束统一用中文分号，结尾不需要结束符号"></el-input>
             </el-form-item>
         </el-form>
 
         <el-form style="padding-top: 20px">
             <el-form-item>
-                <el-button type="primary" @click="submit">提交</el-button>
-                <el-button>取消</el-button>
+                <el-button type="warning" @click="submit">提交</el-button>
+                <el-button type="info" @click="returnBack">返回</el-button>
             </el-form-item>
         </el-form>
     </el-card>
@@ -102,6 +112,9 @@
             },
         },
         methods: {
+            returnBack: function() {
+                location.href = 'index.html';
+            },
             submit: function () {
                 vm.$refs['refName'].validate(function (valid) {
                     pass = true;
@@ -117,7 +130,7 @@
                     if (valid && pass) {
                         $.ajax({
                             type: 'POST',
-                            url:"http://www.3kcenter_version.com/ajaxRoute.php",
+                            url:"route.php",
                             data:{
                                 ct: 'VersionLogic',
                                 ac: 'addVersion',
@@ -130,6 +143,9 @@
                                         message: data.msg,
                                         type: 'success',
                                     });
+                                    setTimeout(function () {
+                                        location.href = 'index.html';
+                                    }, 1000);
                                 } else {
                                     vm.$message({
                                         message: data.msg,
@@ -150,7 +166,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url:"http://www.3kcenter_version.com/ajaxRoute.php",
+                    url:"route.php",
                     data:{
                         ct: 'Menu',
                         ac: 'getModelMenu',
@@ -167,7 +183,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url:"http://www.3kcenter_version.com/ajaxRoute.php",
+                    url:"route.php",
                     data:{
                         ct: 'Menu',
                         ac: 'getFuncMenu',
@@ -190,7 +206,7 @@
         created: function () {
             $.ajax({
                 type: 'POST',
-                url:"http://www.3kcenter_version.com/ajaxRoute.php",
+                url:"route.php",
                 data:{
                     ct: 'Menu',
                     ac: 'getSysMenu',

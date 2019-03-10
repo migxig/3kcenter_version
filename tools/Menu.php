@@ -13,11 +13,7 @@ class Menu
 //    private $center_url = 'http://admin-center.demo.3kwan.com:82';
     private $center_url = 'https://3kadmin-center.3k.com';
     private $key = 'centerkey';
-
     public static $menuArr = [];
-    public static $sysArr = [];
-    public static $modelArr = [];
-    public static $funcArr = [];
 
     public function __construct()
     {
@@ -25,7 +21,7 @@ class Menu
     }
 
     /**
-     * 获取签名
+     * 签名
      * @return string
      */
     public function getSign()
@@ -39,7 +35,7 @@ class Menu
     }
 
     /**
-     * 获取菜单列表
+     * 菜单列表
      * @return string
      */
     public function getMenuList()
@@ -95,42 +91,78 @@ class Menu
                     ],
                 ],
             ],
+            'yisdk'=>[
+                'id'=>'yisdk',
+                'name'=>'融合管理系统',
+                'children'=>[
+                    [
+                        'id'=>'Base',
+                        'name'=>'基础管理',
+                        'children'=>[
+                            [
+                                'id'=>'yisdk_Base-listParner',
+                                'name'=>'合作商管理',
+                                'hidden'=>0,
+                                'ct'=>'yisdk_Base',
+                            ],
+                            [
+                                'id'=>'yisdk_Base-listPaychannelBase',
+                                'name'=>'融合切3k收银台',
+                                'hidden'=>0,
+                                'ct'=>'yisdk_Base',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id'=>'Game',
+                        'name'=>'游戏管理',
+                        'children'=>[
+                            [
+                                'id'=>'yisdk_Game-listGameGroup',
+                                'name'=>'创建游戏组',
+                                'hidden'=>0,
+                                'ct'=>'yisdk_Game'
+                            ],
+                            [
+                                'id'=>'yisdk_Game-listGameVest',
+                                'name'=>'游戏马甲名',
+                                'hidden'=>0,
+                                'ct'=>'yisdk_Game'
+                            ],
+                            [
+                                'id'=>'yisdk_Game-listChannel',
+                                'name'=>'渠道管理',
+                                'hidden'=>0,
+                                'ct'=>'yisdk_Game'
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
 
-        $sysList = [];
-        $modelList = [];
-        $funcList = [];
-        foreach ($menuList as $sys=>$sysItem) {
-            $sysList[$sysItem['id']] = ['id' => $sysItem['id'], 'name' => $sysItem['name']];
-            if (!empty($sysItem['children'])) {
-                foreach ($sysItem['children'] as $modelItem) {
-                    $modelList[$sys.'_'.$modelItem['id']] = ['id' => $sys.'_'.$modelItem['id'], 'name' => $modelItem['name']];
-                    if (!empty($modelItem['children'])) {
-                        foreach ($modelItem['children'] as $funcItem) {
-                            $funcList[$funcItem['id']] = ['id' => $funcItem['id'], 'name' => $funcItem['name']];
-                        }
-                    }
-                }
-            }
-        }
-        self::$sysArr = $sysList;
-        self::$modelArr = $modelList;
-        self::$funcArr = $funcList;
         self::$menuArr = $menuList;
     }
 
     /**
-     * 获取系统列表
+     * 系统列表
      * @return array
      */
     public function getSysMenu()
     {
-        if (self::$sysArr) {
-            return self::$sysArr;
+        if (self::$menuArr) {
+            $menuList = self::$menuArr;
         } else {
             $this->getMenuList();
-            return self::$sysArr;
+            $menuList = self::$menuArr;
         }
+
+        $sysArr = [];
+        foreach ($menuList as $sys=>$sysItem) {
+            $sysArr[] = ['id'=>$sysItem['id'], 'name'=>$sysItem['name']];
+        }
+
+        return $sysArr;
     }
 
     /**
@@ -203,5 +235,59 @@ class Menu
         }
 
         return $funcArr;
+    }
+
+    /**
+     * 获取名称
+     * @param $id
+     * @param $type
+     * @return string
+     */
+    public function getNameById($id, $type)
+    {
+        if (self::$menuArr) {
+            $menuList =  self::$menuArr;
+        } else {
+            $this->getMenuList();
+            $menuList =  self::$menuArr;
+        }
+
+        $sysList = [];
+        $modelList = [];
+        $funcList = [];
+        foreach ($menuList as $sys=>$sysItem) {
+            $sysList[$sysItem['id']] = ['id' => $sysItem['id'], 'name' => $sysItem['name']];
+            if (!empty($sysItem['children'])) {
+                foreach ($sysItem['children'] as $modelItem) {
+                    $modelList[$sys.'_'.$modelItem['id']] = ['id' => $sys.'_'.$modelItem['id'], 'name' => $modelItem['name']];
+                    if (!empty($modelItem['children'])) {
+                        foreach ($modelItem['children'] as $funcItem) {
+                            $funcList[$funcItem['id']] = ['id' => $funcItem['id'], 'name' => $funcItem['name']];
+                        }
+                    }
+                }
+            }
+        }
+
+        switch ($type) {
+            case 'sys':
+                $data = $sysList;
+                break;
+            case 'model':
+                $data = $modelList;
+                break;
+            case 'func':
+                $data = $funcList;
+                break;
+            default:
+                $data = [];
+                break;
+        }
+
+        if (isset($data[$id])) {
+            return $data[$id]['name'];
+        } else {
+            return $id;
+        }
     }
 }

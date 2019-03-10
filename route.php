@@ -5,7 +5,7 @@
  * Date: 2019-03-08
  * Time: 17:20
  */
-require ('index.php');
+require ('web.php');
 
 $ct = !empty($_REQUEST['ct']) ? trim($_REQUEST['ct']) : '';
 $ac = !empty($_REQUEST['ac']) ? trim($_REQUEST['ac']) : '';
