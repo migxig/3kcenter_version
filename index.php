@@ -73,30 +73,30 @@
             <el-table-column prop="time" label="添加时间" width="200px"></el-table-column>
             <el-table-column prop="" label="操作" width="100px">
                 <template slot-scope="scope">
+                    <el-button type="text" @click="handelEdit(scope.row.id)">编辑</el-button>
                     <el-button type="text" @click="handelDel(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
+
+        <el-dialog
+                :title="'版本号：'+form.version"
+                :visible.sync="centerDialogVisible"
+                width="50%"
+                center>
+            <h3 class="title">III 功能变更：</h3>
+            <div class="data" v-for="(item,index) in induceData">
+                <h3 class="sys" v-text="'#'+index"></h3>
+                <div class="func" v-for="(sItem,sIndex) in item" v-html="(sIndex+1)+'、'+sItem"></div>
+            </div>
+            <h3 class="title" style="margin-top: 60px">III 数据表变更：</h3>
+            <div v-for="(item,index) in sqlData" v-html="(index+1)+'、'+item"></div>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="centerDialogVisible = false">关闭</el-button>
+            </span>
+        </el-dialog>
     </el-card>
-
-    <el-dialog
-            :title="'版本号：'+form.version"
-            :visible.sync="centerDialogVisible"
-            width="50%"
-            center>
-        <h3 class="title">III 功能变更：</h3>
-        <div class="data" v-for="(item,index) in induceData">
-            <h3 class="sys" v-text="'#'+index"></h3>
-            <div class="func" v-for="(sItem,sIndex) in item" v-html="(sIndex+1)+'、'+sItem"></div>
-        </div>
-        <h3 class="title" style="margin-top: 60px">III 数据表变更：</h3>
-        <div v-for="(item,index) in sqlData" v-html="(index+1)+'、'+item"></div>
-
-        <span slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="centerDialogVisible = false">关闭</el-button>
-        </span>
-    </el-dialog>
-
 </div>
 <script>
     var vm = new Vue({
@@ -113,6 +113,9 @@
         },
         methods: {
             induce: function() {
+                vm.induceData = [];
+                vm.sqlData = [];
+
                 $.ajax({
                     type: 'POST',
                     url:"route.php",
@@ -138,6 +141,9 @@
             },
             handelAdd: function() {
                 location.href = 'add.php';
+            },
+            handelEdit: function(id) {
+                location.href = 'edit.php?id='+id;
             },
             handelDel: function(id) {
                 console.log(id)

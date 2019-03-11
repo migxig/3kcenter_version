@@ -59,10 +59,10 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="更新内容" style="width: 81.3%" prop="content">
-                <el-input type="textarea" v-model="groups.content" rows="4" placeholder="单句结束统一用中文分号，结尾不需要结束符号"></el-input>
+                <el-input type="textarea" v-model="groups.content" rows="4" placeholder="请输入简概描述"></el-input>
             </el-form-item>
             <el-form-item label="数据表" style="width: 81.3%" prop="sql">
-                <el-input type="textarea" v-model="groups.sql" rows="3" placeholder="空代表没有变动，单句结束统一用中文分号，结尾不需要结束符号"></el-input>
+                <el-input type="textarea" v-model="groups.sql" rows="3" placeholder="若无变动请留空"></el-input>
             </el-form-item>
         </el-form>
 

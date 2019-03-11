@@ -55,10 +55,10 @@ class VersionLogic extends Basic
         $sql = [];
         foreach ($list as $index=>$item) {
             if (!empty($item['content'])) {
-                $data[$item['sys']][] = $item['model'] . '_' .$item['func'] . '：' . $item['content'] . '；<br/>';
+                $data[$item['sys']][] = $item['model'] . '_' .$item['func'] . '：' . $item['content'] . '<br/>';
             }
             if (!empty($item['sql'])) {
-                $sql[] = $item['sql'] . '；<br/>';
+                $sql[] = $item['sql'] . '<br/>';
             }
         }
 
@@ -140,6 +140,47 @@ class VersionLogic extends Basic
             }
         } else {
             return ['code'=>1, 'msg'=>'删除失败'];
+        }
+    }
+
+    /**
+     * 编辑
+     * @param $params
+     * @return array
+     */
+    public function editVersion($params)
+    {
+        $id = !empty($params['id']) ? intval($params['id']) : 0;
+        if (!$id) {
+            return ['code'=>1, 'msg'=>'ID参数异常'];
+        }
+        $where['id'] = $id;
+
+        $data = [];
+        isset($params['content']) && $data['content'] = trim($params['content']);
+        isset($params['sql']) && $data['sql'] = trim($params['sql']);
+
+        $db = $this->getDb();
+        $res = $db->update('version', $data, $where);
+        if ($res) {
+            return ['code'=>0, 'msg'=>'编辑成功'];
+        } else {
+            return ['code'=>1, 'msg'=>'编辑失败'];
+        }
+    }
+
+    /**
+     * @param $params
+     * @return mixed
+     */
+    public function getRowById($params)
+    {
+        $id = !empty($params['id']) ? intval($params['id']) : 0;
+        if ($id > 0) {
+            $db = $this->getDb();
+            $sql = "SELECT * FROM `version` WHERE `id` = " . $id;
+            $row = $db->fetch($sql);
+            return $row;
         }
     }
 }
