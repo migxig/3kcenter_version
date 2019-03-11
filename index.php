@@ -137,7 +137,7 @@
                 });
             },
             handelAdd: function() {
-                location.href = 'add.html';
+                location.href = 'add.php';
             },
             handelDel: function(id) {
                 console.log(id)

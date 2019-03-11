@@ -113,7 +113,7 @@
         },
         methods: {
             returnBack: function() {
-                location.href = 'index.html';
+                location.href = 'index.php';
             },
             submit: function () {
                 vm.$refs['refName'].validate(function (valid) {
@@ -144,7 +144,7 @@
                                         type: 'success',
                                     });
                                     setTimeout(function () {
-                                        location.href = 'index.html';
+                                        location.href = 'index.php';
                                     }, 1000);
                                 } else {
                                     vm.$message({
