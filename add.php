@@ -29,7 +29,7 @@
     </div>
 
     <el-card class="box-card">
-        <el-form ref="refName" :model="form" :rules="rules" label-width="100px">
+        <el-form ref="refName" :model="form" :rules="rules" label-width="70px">
             <el-form-item label="版本号" style="display: inline-block" prop="version">
                 <el-input v-model="form.version"></el-input>
             </el-form-item>

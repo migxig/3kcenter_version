@@ -45,10 +45,10 @@
             <el-form-item label="功能" style="display: inline-block" prop="func">
                 <el-input v-model="form.func" disabled></el-input>
             </el-form-item>
-            <el-form-item label="更新内容" style="width: 81.3%" prop="content">
+            <el-form-item label="更新内容" style="width: 81.5%" prop="content">
                 <el-input type="textarea" v-model="form.content" rows="4" placeholder="请输入简概描述"></el-input>
             </el-form-item>
-            <el-form-item label="数据表" style="width: 81.3%" prop="sql">
+            <el-form-item label="数据表" style="width: 81.5%" prop="sql">
                 <el-input type="textarea" v-model="form.sql" rows="3" placeholder="若无变动请留空"></el-input>
             </el-form-item>
             <el-form-item>

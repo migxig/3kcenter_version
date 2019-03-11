@@ -45,14 +45,14 @@
     </div>
 
     <el-card class="box-card" style="margin-bottom: 20px">
-        <el-form ref="refName" :model="form" label-width="100px">
+        <el-form ref="refName" :model="form" label-width="60px">
             <el-form-item label="版本号" style="display: inline-block" prop="version">
                 <el-input v-model="form.version"></el-input>
             </el-form-item>
             <el-form-item label="用户名" style="display: inline-block" prop="user">
                 <el-input v-model="form.user"></el-input>
             </el-form-item>
-            <el-form-item style="display: inline-block">
+            <el-form-item style="display: inline-block" label-width="10px">
                 <el-button type="warning" @click="loadData">搜索</el-button>
                 <el-button type="warning" @click="induce">归纳</el-button>
                 <el-button type="primary" @click="handelAdd">新增</el-button>
