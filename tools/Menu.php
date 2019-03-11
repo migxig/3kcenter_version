@@ -10,8 +10,7 @@ namespace tools;
 
 class Menu
 {
-//    private $center_url = 'http://admin-center.demo.3kwan.com:82';
-    private $center_url = 'https://3kadmin-center.3k.com';
+    private $center_url = 'http://admin-center.demo.3kwan.com:82';
     private $key = 'centerkey';
     public static $menuArr = [];
 
@@ -54,93 +53,6 @@ class Menu
 
         $func = new Func();
         $menuList = $func->http_post($this->center_url, $params);
-        $menuList = [
-            'sys'=>[
-                'id'=>'sys',
-                'name'=>'基础管理系统',
-                'children'=>[
-                    [
-                        'id'=>'Base',
-                        'name'=>'基础管理',
-                        'children'=>[
-                            [
-                                'id'=>'sys_Base-listDepartment',
-                                'name'=>'部门管理',
-                                'hidden'=>0,
-                                'ct'=>'sys_Base',
-                            ],
-                            [
-                                'id'=>'sys_Base-listDeptGroup',
-                                'name'=>'小组管理',
-                                'hidden'=>0,
-                                'ct'=>'sys_Base',
-                            ],
-                        ],
-                    ],
-                    [
-                        'id'=>'Project',
-                        'name'=>'项目管理',
-                        'children'=>[
-                            [
-                                'id'=>'sys_Base-listProject',
-                                'name'=>'项目列表',
-                                'hidden'=>0,
-                                'ct'=>'sys_Project'
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            'yisdk'=>[
-                'id'=>'yisdk',
-                'name'=>'融合管理系统',
-                'children'=>[
-                    [
-                        'id'=>'Base',
-                        'name'=>'基础管理',
-                        'children'=>[
-                            [
-                                'id'=>'yisdk_Base-listParner',
-                                'name'=>'合作商管理',
-                                'hidden'=>0,
-                                'ct'=>'yisdk_Base',
-                            ],
-                            [
-                                'id'=>'yisdk_Base-listPaychannelBase',
-                                'name'=>'融合切3k收银台',
-                                'hidden'=>0,
-                                'ct'=>'yisdk_Base',
-                            ],
-                        ],
-                    ],
-                    [
-                        'id'=>'Game',
-                        'name'=>'游戏管理',
-                        'children'=>[
-                            [
-                                'id'=>'yisdk_Game-listGameGroup',
-                                'name'=>'创建游戏组',
-                                'hidden'=>0,
-                                'ct'=>'yisdk_Game'
-                            ],
-                            [
-                                'id'=>'yisdk_Game-listGameVest',
-                                'name'=>'游戏马甲名',
-                                'hidden'=>0,
-                                'ct'=>'yisdk_Game'
-                            ],
-                            [
-                                'id'=>'yisdk_Game-listChannel',
-                                'name'=>'渠道管理',
-                                'hidden'=>0,
-                                'ct'=>'yisdk_Game'
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
         self::$menuArr = $menuList;
     }
 

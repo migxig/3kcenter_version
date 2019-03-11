@@ -15,9 +15,9 @@ class Basic
     public function getDb()
     {
         $db_config = [
-            'dsn' => 'mysql:host=192.168.1.162;dbname=test',
-            'username' => 'root',
-            'password' => 'root',
+            'dsn' => 'mysql:host=192.168.0.231;port=25686;dbname=admin_center',
+            'username' => 'ylmf',
+            'password' => 'dgMDbkpGh3t',
             'charset' => 'utf8',
         ];
 
