@@ -108,6 +108,7 @@ class VersionLogic extends Basic
                 $tmp['func'] = $menu->getNameById($item['func'], 'func');
                 $tmp['content'] = trim($item['content']);
                 $tmp['sql'] = trim($item['sql']);
+                $tmp['remark'] = trim($item['remark']);
 
                 $tmp['version'] = $version;
                 $tmp['user'] = $user;
@@ -159,6 +160,7 @@ class VersionLogic extends Basic
         $data = [];
         isset($params['content']) && $data['content'] = trim($params['content']);
         isset($params['sql']) && $data['sql'] = trim($params['sql']);
+        isset($params['remark']) && $data['remark'] = trim($params['remark']);
 
         $db = $this->getDb();
         $res = $db->update('version', $data, $where);

@@ -64,6 +64,9 @@
             <el-form-item label="数据表" style="width: 81.3%" prop="sql">
                 <el-input type="textarea" v-model="groups.sql" rows="3" placeholder="若无变动请留空"></el-input>
             </el-form-item>
+            <el-form-item label="备注" style="width: 81.3%" prop="remark">
+                <el-input type="textarea" v-model="groups.remark" rows="4" placeholder=""></el-input>
+            </el-form-item>
         </el-form>
 
         <el-form style="padding-top: 20px">
@@ -82,7 +85,7 @@
                 version: '',
                 user:'',
                 groups: [
-                    {sys: '', model: '', func: '', content: '', sql: '', modelArr: [], funcArr: [],},
+                    {sys: '', model: '', func: '', content: '', sql: '', remark: '', modelArr: [], funcArr: [],},
                 ],
             },
             sysArr: [],
@@ -195,7 +198,7 @@
                 });
             },
             addParams: function () {
-                var o = {sys: '', model: '', func: '', content: '', sql: '', modelArr: [], funcArr: [],};
+                var o = {sys: '', model: '', func: '', content: '', sql: '', remark: '', modelArr: [], funcArr: [],};
                 vm.form.groups.push(o);
             },
             subParams: function (key) {

@@ -51,6 +51,9 @@
             <el-form-item label="数据表" style="width: 81.5%" prop="sql">
                 <el-input type="textarea" v-model="form.sql" rows="3" placeholder="若无变动请留空"></el-input>
             </el-form-item>
+            <el-form-item label="备注" style="width: 81.5%" prop="remark">
+                <el-input type="textarea" v-model="form.remark" rows="3" placeholder=""></el-input>
+            </el-form-item>
             <el-form-item>
                 <el-button type="warning" @click="submit">提交</el-button>
                 <el-button type="info" @click="returnBack">返回</el-button>
@@ -71,6 +74,7 @@
                 func: '',
                 content: '',
                 sql: '',
+                remark: '',
             },
 
             rules:{

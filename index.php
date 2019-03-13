@@ -69,6 +69,7 @@
             <el-table-column prop="func" label="功能" width="150px"></el-table-column>
             <el-table-column prop="content" label="更新内容"></el-table-column>
             <el-table-column prop="sql" label="数据表"></el-table-column>
+            <el-table-column prop="remark" label="备注"></el-table-column>
             <el-table-column prop="user" label="用户" width="90px"></el-table-column>
             <el-table-column prop="time" label="添加时间" width="200px"></el-table-column>
             <el-table-column prop="" label="操作" width="100px">

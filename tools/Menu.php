@@ -53,6 +53,48 @@ class Menu
 
         $func = new Func();
         $menuList = $func->http_post($this->center_url, $params);
+
+        //组装公共部分和前端部分
+        $otherList = [
+            'comment'=>[
+                'id' => 'comment',
+                'name' => '公共系统',
+                'children' => [
+                    [
+                        'id' => 'Public',
+                        'name' => '公共模块',
+                        'children' => [
+                            [
+                                'id' => 'comment_Public-listCommentPublic',
+                                'name' => '公共内容',
+                                'ct' => 'comment_Public',
+                                'hidden' => 0,
+                            ],
+                        ],
+                    ],
+                ]
+            ],
+            'js'=>[
+                'id' => 'js',
+                'name' => '前端系统',
+                'children' => [
+                    [
+                        'id' => 'Html',
+                        'name' => '前端模块',
+                        'children' => [
+                            [
+                                'id' => 'js_Html-listHtmlJs',
+                                'name' => '前端内容',
+                                'ct' => 'js_Html',
+                                'hidden' => 0,
+                            ],
+                        ],
+                    ]
+                ]
+            ],
+        ];
+        $menuList = array_merge($menuList, $otherList);
+
         self::$menuArr = $menuList;
     }
 
