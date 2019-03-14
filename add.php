@@ -28,18 +28,23 @@
         </el-breadcrumb>
     </div>
 
-    <el-card class="box-card">
-        <el-form ref="refName" :model="form" :rules="rules" label-width="70px">
-            <el-form-item label="版本号" style="display: inline-block" prop="version">
+    <el-card class="box-card" style="padding-bottom: 20px">
+        <el-form ref="refName" :model="form" :rules="rules" label-width="70px" style="position: fixed; top: 15%;left: 5%">
+            <el-form-item label="版本号" prop="version">
                 <el-input v-model="form.version"></el-input>
             </el-form-item>
-            <el-form-item label="用户名" style="display: inline-block" prop="user">
+            <el-form-item label="用户名" prop="user">
                 <el-input v-model="form.user"></el-input>
+            </el-form-item>
+
+            <el-form-item label-width="10px">
+                <el-button type="warning" @click="submit">提交</el-button>
+                <el-button type="info" @click="returnBack">返回</el-button>
             </el-form-item>
         </el-form>
 
         <el-form v-for="(groups,key) in form.groups" :rules="rulesGroup" :key="key" ref="refGroup" :model="groups" label-width="100px"
-                 style="border: 1px dashed #ccc;padding-top: 20px;width: 60%;position: relative;margin-top: 20px;">
+                 style="border: 1px dashed #ccc;padding: 20px 0 20px 0;width: 60%;position: relative;margin-top: 20px;float: right;margin: right: 10%">
             <i v-if="key == 0" class="el-icon-circle-plus-outline" style="font-size: 20px;position: absolute;right: 8%;top: 45%;cursor: pointer;" @click="addParams"></i>
             <i v-else class="el-icon-remove-outline" style="font-size: 20px;position: absolute;right: 8%;top: 45%;cursor: pointer;" @click="subParams(key)"></i>
 
@@ -58,21 +63,14 @@
                     <el-option v-for="item in groups.funcArr" :label="item.name" :value="item.id" :key="item.id"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="更新内容" style="width: 81.3%" prop="content">
-                <el-input type="textarea" v-model="groups.content" rows="4" placeholder="请输入简概描述"></el-input>
+            <el-form-item label="更新内容" style="width: 82%" prop="content">
+                <el-input type="textarea" v-model="groups.content" rows="3" placeholder="例子：新增和编辑页面新加'游戏马甲名'字段并更改唯一性；搜索条件和列表展示新增游戏马甲名"></el-input>
             </el-form-item>
-            <el-form-item label="数据表" style="width: 81.3%" prop="sql">
-                <el-input type="textarea" v-model="groups.sql" rows="3" placeholder="若无变动请留空"></el-input>
+            <el-form-item label="数据表" style="width: 82%" prop="sql">
+                <el-input type="textarea" v-model="groups.sql" rows="3" placeholder="例子1：在`admin_center`新加`version`表；在`admin_center`.`version`表新加`remark`字段"></el-input>
             </el-form-item>
-            <el-form-item label="备注" style="width: 81.3%" prop="remark">
-                <el-input type="textarea" v-model="groups.remark" rows="4" placeholder=""></el-input>
-            </el-form-item>
-        </el-form>
-
-        <el-form style="padding-top: 20px">
-            <el-form-item>
-                <el-button type="warning" @click="submit">提交</el-button>
-                <el-button type="info" @click="returnBack">返回</el-button>
+            <el-form-item label="备注" style="width: 82%" prop="remark">
+                <el-input type="textarea" v-model="groups.remark" rows="3" placeholder=""></el-input>
             </el-form-item>
         </el-form>
     </el-card>
@@ -198,6 +196,15 @@
                 });
             },
             addParams: function () {
+                if (vm.form.groups.length >= 10) {
+                    vm.$message({
+                        message: '分组最多10个',
+                        type: 'warning',
+                    });
+
+                    return false;
+                }
+
                 var o = {sys: '', model: '', func: '', content: '', sql: '', remark: '', modelArr: [], funcArr: [],};
                 vm.form.groups.push(o);
             },
