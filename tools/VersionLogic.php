@@ -58,7 +58,19 @@ class VersionLogic extends Basic
             return ['code'=>1, 'msg'=>'请先输入版本号', 'data'=>[], 'sql'=>[]];
         }
 
-        list($count, $list) = $this->listVersion($params);
+        $where = ' 1 ';
+        if(!empty($params['version'])) {
+            $where .= " AND `version` = '{$params['version']}'";
+        }
+        if(!empty($params['user'])) {
+            $where .= " AND `user` LIKE '{$params['user']}'";
+        }
+
+        $sql = "SELECT * FROM `version` WHERE {$where} ORDER BY `id` DESC" ;
+        $db = $this->getDb();
+        $list = $db->fetchAll($sql);
+        $list = $this->getListName($list);
+
         $data = [];
         $sql = [];
         foreach ($list as $index=>$item) {
