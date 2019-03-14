@@ -58,7 +58,7 @@ class Menu
         $otherList = [
             'comment'=>[
                 'id' => 'comment',
-                'name' => '公共系统',
+                'name' => '公共部分',
                 'children' => [
                     [
                         'id' => 'Public',
@@ -76,7 +76,7 @@ class Menu
             ],
             'js'=>[
                 'id' => 'js',
-                'name' => '前端系统',
+                'name' => '前端部分',
                 'children' => [
                     [
                         'id' => 'Html',

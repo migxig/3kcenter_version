@@ -56,6 +56,19 @@
                 <el-button type="warning" @click="loadData">搜索</el-button>
                 <el-button type="warning" @click="induce">归纳</el-button>
                 <el-button type="primary" @click="handelAdd">新增</el-button>
+
+                <el-tooltip placement="top">
+                    <div slot="content">
+                        使用说明：<br/>
+                        <p><i class="el-icon-star-off"></i>新增：一般更改填写的内容具体到某个功能，若改动涉及多个功能，在系统选择时请选'公共部分'；<br />
+                        输入的版本号是即将发布的版本号；<br />
+                        </p>
+                        <p>
+                            <i class="el-icon-star-off"></i>归纳：根据输入的版本号，将各个系统的更改内容做汇总展示；<br />
+                        </p>
+                    </div>
+                    <i class="el-icon-question" style="font-size: 28px;cursor: pointer;vertical-align: middle"></i>
+                </el-tooltip>
             </el-form-item>
         </el-form>
     </el-card>
