@@ -73,13 +73,31 @@ class VersionLogic extends Basic
 
         $data = [];
         $sql = [];
+        $commentKey = '公共部分';
+        $commentArr = [];
+        $jsKey = '前端部分';
+        $jsArr = [];
         foreach ($list as $index=>$item) {
             if (!empty($item['content'])) {
-                $data[$item['sys']][] = $item['model'] . '_' .$item['func'] . '：' . $item['content'] . '<br/>';
+                //公共部分+前端部分 放在最后
+                if ($item['sys'] == $commentKey) {
+                    $commentArr[] = $item['model'] . '_' .$item['func'] . '：' . $item['content'] . '<br/>';
+                } else if ($item['sys'] == $jsKey) {
+                    $jsArr[] = $item['model'] . '_' .$item['func'] . '：' . $item['content'] . '<br/>';
+                } else {
+                    $data[$item['sys']][] = $item['model'] . '_' .$item['func'] . '：' . $item['content'] . '<br/>';
+                }
             }
             if (!empty($item['sql'])) {
                 $sql[] = $item['sql'] . '<br/>';
             }
+        }
+
+        if (!empty($commentArr)) {
+            $data[$commentKey] = $commentArr;
+        }
+        if (!empty($jsArr)) {
+            $data[$commentKey] = $jsArr;
         }
 
         if (empty($data)) {

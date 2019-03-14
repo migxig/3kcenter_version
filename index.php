@@ -110,7 +110,7 @@
         <el-dialog
                 :title="'版本号：'+form.version"
                 :visible.sync="centerDialogVisible"
-                width="50%"
+                width="60%"
                 center>
             <h3 class="title">III 功能变更：</h3>
             <div class="data" v-for="(item,index) in induceData">
