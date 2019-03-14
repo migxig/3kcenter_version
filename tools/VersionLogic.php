@@ -97,7 +97,7 @@ class VersionLogic extends Basic
             $data[$commentKey] = $commentArr;
         }
         if (!empty($jsArr)) {
-            $data[$jsArr] = $jsArr;
+            $data[$jsKey] = $jsArr;
         }
 
         if (empty($data)) {
