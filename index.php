@@ -34,6 +34,10 @@
             color: #66b1ff;
             cursor: pointer;
         }
+        .page {
+            margin: 15px;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -92,6 +96,16 @@
                 </template>
             </el-table-column>
         </el-table>
+        <div class="page">
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="form.page_no"
+                    :page-size="form.page_size"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="form.count">
+            </el-pagination>
+        </div>
 
         <el-dialog
                 :title="'版本号：'+form.version"
@@ -119,6 +133,9 @@
             form: {
                 version: '',
                 user:'',
+                page_size: 10,
+                page_no: 1,
+                count: 0,
             },
             tableData: [],
             induceData: [],
@@ -126,6 +143,17 @@
             centerDialogVisible: false,
         },
         methods: {
+            // 分页
+            handleSizeChange: function (val) {
+                vm.form.page_size = val;
+                vm.loadData();
+            },
+            // 第N页
+            handleCurrentChange: function (val) {
+                vm.form.page_no = val;
+                vm.loadData();
+            },
+
             induce: function() {
                 vm.induceData = [];
                 vm.sqlData = [];
@@ -204,7 +232,9 @@
                         params: this.form,
                     },
                     success: function(result){
-                        vm.tableData = JSON.parse(result);
+                        var data = JSON.parse(result);
+                        vm.tableData = data.list;
+                        vm.form.count = data.count;
                     }
                 });
             },

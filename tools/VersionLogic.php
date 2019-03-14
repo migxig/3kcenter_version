@@ -20,12 +20,20 @@ class VersionLogic extends Basic
             $where .= " AND `user` LIKE '{$params['user']}'";
         }
 
+        //分页
+        $page_no = !empty($params['page_no']) ? $params['page_no'] : 1;
+        $page_size = !empty($params['page_size']) ? $params['page_size'] : 10;
+        $offset = ($page_no - 1) * $page_size;
+
         $db = $this->getDb();
-        $sql = 'SELECT * FROM `version` WHERE ' . $where . 'ORDER BY `id` DESC';
+        $sql = "SELECT * FROM `version` WHERE {$where} ORDER BY `id` DESC LIMIT {$offset},{$page_size}" ;
         $list = $db->fetchAll($sql);
         $list = $this->getListName($list);
 
-        return $list;
+        $countSql = "SELECT COUNT(*) count FROM `version` WHERE {$where}";
+        $countRow = $db->fetch($countSql);
+
+        return ['count' => intval($countRow['count']), 'list' => $list];
     }
 
     public function getListName($list)
@@ -50,7 +58,7 @@ class VersionLogic extends Basic
             return ['code'=>1, 'msg'=>'请先输入版本号', 'data'=>[], 'sql'=>[]];
         }
 
-        $list = $this->listVersion($params);
+        list($count, $list) = $this->listVersion($params);
         $data = [];
         $sql = [];
         foreach ($list as $index=>$item) {
