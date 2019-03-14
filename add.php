@@ -67,7 +67,7 @@
                 <el-input type="textarea" v-model="groups.content" rows="3" placeholder="例子：新增和编辑页面新加'游戏马甲名'字段并更改唯一性；搜索条件和列表展示新增游戏马甲名"></el-input>
             </el-form-item>
             <el-form-item label="数据表" style="width: 82%" prop="sql">
-                <el-input type="textarea" v-model="groups.sql" rows="3" placeholder="例子1：在`admin_center`新加`version`表；在`admin_center`.`version`表新加`remark`字段"></el-input>
+                <el-input type="textarea" v-model="groups.sql" rows="3" placeholder="例子1：在`admin_center`新加`version`，`user`表； 例子2：在`admin_center`.`version`表新加`remark`字段"></el-input>
             </el-form-item>
             <el-form-item label="备注" style="width: 82%" prop="remark">
                 <el-input type="textarea" v-model="groups.remark" rows="3" placeholder=""></el-input>

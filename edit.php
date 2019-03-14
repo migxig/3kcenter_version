@@ -46,10 +46,10 @@
                 <el-input v-model="form.func" disabled></el-input>
             </el-form-item>
             <el-form-item label="更新内容" style="width: 81.5%" prop="content">
-                <el-input type="textarea" v-model="form.content" rows="4" placeholder="请输入简概描述"></el-input>
+                <el-input type="textarea" v-model="form.content" rows="4" placeholder="例子：新增和编辑页面新加'游戏马甲名'字段并更改唯一性；搜索条件和列表展示新增游戏马甲名"></el-input>
             </el-form-item>
             <el-form-item label="数据表" style="width: 81.5%" prop="sql">
-                <el-input type="textarea" v-model="form.sql" rows="3" placeholder="若无变动请留空"></el-input>
+                <el-input type="textarea" v-model="form.sql" rows="3" placeholder="例子1：在`admin_center`新加`version`，`user`表； 例子2：在`admin_center`.`version`表新加`remark`字段"></el-input>
             </el-form-item>
             <el-form-item label="备注" style="width: 81.5%" prop="remark">
                 <el-input type="textarea" v-model="form.remark" rows="3" placeholder=""></el-input>
