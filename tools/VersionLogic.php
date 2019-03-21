@@ -236,7 +236,7 @@ class VersionLogic extends Basic
             $nowVersion = $row['version'];
             return $nowVersion;
         }
-        return '0.0.0';
+        return '';
     }
 
     /**
@@ -244,14 +244,18 @@ class VersionLogic extends Basic
      */
     public function getNextVersion()
     {
-        $nowVersion = $this->getNowVersion();
-        $date = date('w');
-        if ($date == '4') {
-            $nextVersion = $nowVersion;
-        } else {
-            $nextVersion = (new Func())->nextNum($nowVersion);
-        }
+        $db = $this->getDb();
 
-        return $nextVersion;
+        //上周最大版本
+        $time = strtotime('last Friday');
+        $sql = "SELECT `version` FROM `version` WHERE `time`<={$time} ORDER BY `version` DESC LIMIT 1";
+        $row = $db->fetch($sql);
+        if ($row) {
+            $nowVersion = $row['version'];
+            $nextVersion = (new Func())->nextNum($nowVersion);
+            return $nextVersion;
+        } else {
+            return '';
+        }
     }
 }

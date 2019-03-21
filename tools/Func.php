@@ -76,8 +76,12 @@ class Func
      * @param string $nowNum
      * @return string
      */
-    public function nextNum($nowNum = '0.0.0')
+    public function nextNum($nowNum = '')
     {
+        if (empty($nowNum)) {
+            return '';
+        }
+
         $lastIndex = strrpos($nowNum, '.');
         $toStr = substr($nowNum, 0, $lastIndex);
         $toArr = explode('.', $toStr);

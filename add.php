@@ -91,6 +91,7 @@
             rules:{
                 version: [
                     {required: true, message: '版本号不能为空'},
+                    {pattern: /^\d+\.\d+\.\d+$/, message: "版本号格式限制为:A.B.C"},
                 ],
                 user: [
                     {required: true, message: '用户名不能为空'},
@@ -227,18 +228,18 @@
                 }
             });
 
-            // $.ajax({
-            //     type: 'POST',
-            //     url:"route.php",
-            //     data:{
-            //         ct: 'VersionLogic',
-            //         ac: 'getNextVersion',
-            //     },
-            //     success: function(result){
-            //         var version = JSON.parse(result);
-            //         vm.form.version = version;
-            //     }
-            // });
+            $.ajax({
+                type: 'POST',
+                url:"route.php",
+                data:{
+                    ct: 'VersionLogic',
+                    ac: 'getNextVersion',
+                },
+                success: function(result){
+                    var version = JSON.parse(result);
+                    vm.form.version = version;
+                }
+            });
         },
     });
 </script>
