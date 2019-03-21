@@ -229,7 +229,7 @@
                     data:{
                         ct: 'VersionLogic',
                         ac: 'listVersion',
-                        params: this.form,
+                        params: vm.form,
                     },
                     success: function(result){
                         var data = JSON.parse(result);
@@ -241,7 +241,19 @@
         },
 
         created: function () {
-            this.loadData();
+            $.ajax({
+                type: 'POST',
+                url:"route.php",
+                data:{
+                    ct: 'VersionLogic',
+                    ac: 'getNowVersion',
+                },
+                success: function(result){
+                    var version = JSON.parse(result);
+                    vm.form.version = version;
+                    vm.loadData();
+                }
+            });
         },
     });
 </script>

@@ -223,4 +223,35 @@ class VersionLogic extends Basic
             return $row;
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getNowVersion()
+    {
+        $db = $this->getDb();
+        $sql = "SELECT `version` FROM `version` ORDER BY `version` DESC LIMIT 1";
+        $row = $db->fetch($sql);
+        if ($row) {
+            $nowVersion = $row['version'];
+            return $nowVersion;
+        }
+        return '0.0.0';
+    }
+
+    /**
+     * @return string
+     */
+    public function getNextVersion()
+    {
+        $nowVersion = $this->getNowVersion();
+        $date = date('w');
+        if ($date == '4') {
+            $nextVersion = $nowVersion;
+        } else {
+            $nextVersion = (new Func())->nextNum($nowVersion);
+        }
+
+        return $nextVersion;
+    }
 }

@@ -70,4 +70,27 @@ class Func
             return false;
         }
     }
+
+    /**
+     * 计算下一发布版本
+     * @param string $nowNum
+     * @return string
+     */
+    public function nextNum($nowNum = '0.0.0')
+    {
+        $lastIndex = strrpos($nowNum, '.');
+        $toStr = substr($nowNum, 0, $lastIndex);
+        $toArr = explode('.', $toStr);
+        if ($toArr[1] == '9') {
+            $nextSecond =  '0';
+            $nextFirst =  $toArr[0] + 1;
+        } else {
+            $nextSecond =  $toArr[1] + 1;
+            $nextFirst =  $toArr[0];
+        }
+
+        $nextNum = $nextFirst.".".$nextSecond.".0";
+
+        return $nextNum;
+    }
 }
