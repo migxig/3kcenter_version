@@ -230,7 +230,7 @@ class VersionLogic extends Basic
     public function getNowVersion()
     {
         $db = $this->getDb();
-        $sql = "SELECT `version` FROM `version` ORDER BY `version` DESC LIMIT 1";
+        $sql = "SELECT `version` FROM `version` ORDER BY `id` DESC LIMIT 1";
         $row = $db->fetch($sql);
         if ($row) {
             $nowVersion = $row['version'];
@@ -248,7 +248,7 @@ class VersionLogic extends Basic
 
         //上周最大版本
         $time = strtotime('last Friday');
-        $sql = "SELECT `version` FROM `version` WHERE `time`<={$time} ORDER BY `version` DESC LIMIT 1";
+        $sql = "SELECT `version` FROM `version` WHERE `time`<={$time} ORDER BY `id` DESC LIMIT 1";
         $row = $db->fetch($sql);
         if ($row) {
             $nowVersion = $row['version'];

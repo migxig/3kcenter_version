@@ -85,7 +85,7 @@ class Func
         $lastIndex = strrpos($nowNum, '.');
         $toStr = substr($nowNum, 0, $lastIndex);
         $toArr = explode('.', $toStr);
-        if ($toArr[1] == '9') {
+        if ($toArr[1] == '99') {
             $nextSecond =  '0';
             $nextFirst =  $toArr[0] + 1;
         } else {
