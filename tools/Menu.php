@@ -26,8 +26,7 @@ class Menu
     public function getSign()
     {
         $time = time();
-        //$HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "";
-        $HTTP_REFERER = "";
+        $HTTP_REFERER = "admin-center.demo.3kwan.com:82/";
         $sign = md5($HTTP_REFERER . $time . $this->key);
 
         return $sign;
