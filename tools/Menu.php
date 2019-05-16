@@ -91,6 +91,24 @@ class Menu
                     ]
                 ]
             ],
+            'mobile'=>[
+                'id' => 'mobile',
+                'name' => '移动报表',
+                'children' => [
+                    [
+                        'id' => 'Report',
+                        'name' => '移动报表',
+                        'children' => [
+                            [
+                                'id' => 'mobile_Report-listMobileReport',
+                                'name' => '移动报表',
+                                'ct' => 'mobile_Report',
+                                'hidden' => 0,
+                            ],
+                        ],
+                    ],
+                ]
+            ],
         ];
         $menuList = array_merge($menuList, $otherList);
 
