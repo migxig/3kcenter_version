@@ -17,7 +17,7 @@ class Basic
         $db_config = [
             'dsn' => 'mysql:host=192.168.0.231;port=25686;dbname=admin_center',
             'username' => 'ylmf',
-            'password' => 'dgMDbkpGh3t',
+            'password' => 'wLhfopiJ03vX',
             'charset' => 'utf8',
         ];
 
